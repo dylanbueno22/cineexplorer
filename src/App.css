@@ -1,0 +1,26 @@
+/* App.css */
+.app {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #0a0a0a;
+  padding-top: 70px; /* Espaço para o header fixo */
+}
+
+#root {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Responsividade para o header */
+@media (max-width: 768px) {
+  .app {
+    padding-top: 60px;
+  }
+}
+
+@media (max-width: 480px) {
+  .app {
+    padding-top: 55px;
+  }
+}

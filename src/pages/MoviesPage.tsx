@@ -17,24 +17,27 @@ const GENRE_IDS = {
   FANTASY: 14,
   ROMANCE: 10749,
   ADVENTURE: 12,
+  CRIME: 80,
+  MYSTERY: 9648,
+  FAMILY: 10751,
+  DOCUMENTARY: 99,
+  WAR: 10752,
+  WESTERN: 37,
 };
 
 const MoviesPage: React.FC = () => {
   const { movies: popularMovies, loading: popularLoading } = useMovies();
-  const { movies: actionMovies, loading: actionLoading } = useMoviesByGenre(GENRE_IDS.ACTION);
-  const { movies: comedyMovies, loading: comedyLoading } = useMoviesByGenre(GENRE_IDS.COMEDY);
-  const { movies: dramaMovies, loading: dramaLoading } = useMoviesByGenre(GENRE_IDS.DRAMA);
-  const { movies: animationMovies, loading: animationLoading } = useMoviesByGenre(GENRE_IDS.ANIMATION);
-  const { movies: thrillerMovies, loading: thrillerLoading } = useMoviesByGenre(GENRE_IDS.THRILLER);
-  const { movies: horrorMovies, loading: horrorLoading } = useMoviesByGenre(GENRE_IDS.HORROR);
+  const { movies: actionMovies } = useMoviesByGenre(GENRE_IDS.ACTION);
+  const { movies: comedyMovies } = useMoviesByGenre(GENRE_IDS.COMEDY);
+  const { movies: dramaMovies } = useMoviesByGenre(GENRE_IDS.DRAMA);
+  const { movies: animationMovies } = useMoviesByGenre(GENRE_IDS.ANIMATION);
+  const { movies: thrillerMovies } = useMoviesByGenre(GENRE_IDS.THRILLER);
+  const { movies: horrorMovies } = useMoviesByGenre(GENRE_IDS.HORROR);
 
   if (popularLoading) {
     return (
-      <div className="movies-page loading">
-        <div className="loading-spinner">
-          <div className="spinner"></div>
-          <p>Carregando filmes...</p>
-        </div>
+      <div className="movies-page">
+        {/* Carregando sem spinner */}
       </div>
     );
   }
@@ -46,7 +49,7 @@ const MoviesPage: React.FC = () => {
 
       {/* Seções de Filmes */}
       <div className="movies-content">
-        {/* Em Alta */}
+        {/* Filmes Populares */}
         {popularMovies.length > 0 && (
           <MovieCarousel 
             title="🔥 Em Alta" 
@@ -54,7 +57,7 @@ const MoviesPage: React.FC = () => {
           />
         )}
 
-        {/* Ação */}
+        {/* Filmes por Gênero */}
         {actionMovies.length > 0 && (
           <MovieCarousel 
             title="💥 Ação" 
@@ -62,7 +65,6 @@ const MoviesPage: React.FC = () => {
           />
         )}
 
-        {/* Comédia */}
         {comedyMovies.length > 0 && (
           <MovieCarousel 
             title="😂 Comédia" 
@@ -70,7 +72,6 @@ const MoviesPage: React.FC = () => {
           />
         )}
 
-        {/* Drama */}
         {dramaMovies.length > 0 && (
           <MovieCarousel 
             title="🎭 Drama" 
@@ -78,7 +79,6 @@ const MoviesPage: React.FC = () => {
           />
         )}
 
-        {/* Animação */}
         {animationMovies.length > 0 && (
           <MovieCarousel 
             title="🎨 Animação" 
@@ -86,21 +86,20 @@ const MoviesPage: React.FC = () => {
           />
         )}
 
-        {/* Suspense */}
         {thrillerMovies.length > 0 && (
           <MovieCarousel 
-            title="😱 Suspense" 
+            title="😰 Suspense" 
             movies={thrillerMovies.slice(0, 20)} 
           />
         )}
 
-        {/* Terror */}
         {horrorMovies.length > 0 && (
           <MovieCarousel 
             title="👻 Terror" 
             movies={horrorMovies.slice(0, 20)} 
           />
         )}
+
       </div>
     </div>
   );

@@ -1,15 +1,16 @@
-.movie-card {
+/* TVSeriesCard.css - Reutilizando estilos do MovieCard com adaptações para séries */
+.tv-series-card {
   position: relative;
   flex: 0 0 200px;
   height: 300px;
   border-radius: 8px;
   overflow: hidden;
   cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease, z-index 0.3s ease;
+  transition: all 0.3s ease;
   z-index: 1;
 }
 
-.movie-card:hover {
+.tv-series-card:hover {
   transform: scale(1.05);
   z-index: 10;
   box-shadow: 0 8px 25px rgba(229, 9, 20, 0.3);
@@ -27,10 +28,6 @@
   height: 100%;
   object-fit: cover;
   transition: transform 0.3s ease;
-}
-
-.movie-card:hover .card-poster img {
-  transform: scale(1.1);
 }
 
 .poster-placeholder {
@@ -102,7 +99,7 @@
     to bottom,
     rgba(0, 0, 0, 0.1) 0%,
     rgba(0, 0, 0, 0.3) 50%,
-    rgba(0, 0, 0, 0.7) 100%
+    rgba(0, 0, 0, 0.8) 100%
   );
   opacity: 0;
   transition: opacity 0.3s ease;
@@ -111,7 +108,7 @@
   padding: 1rem;
 }
 
-.movie-card:hover .card-overlay {
+.tv-series-card:hover .card-overlay {
   opacity: 1;
 }
 
@@ -123,17 +120,17 @@
 }
 
 .action-btn {
-  background: rgba(255, 255, 255, 0.2);
-  border: none;
-  border-radius: 50%;
   width: 35px;
   height: 35px;
+  border-radius: 50%;
+  border: none;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
   cursor: pointer;
   transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
   backdrop-filter: blur(10px);
 }
 
@@ -185,66 +182,67 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 40%;
+  height: 60%;
   overflow: hidden;
-  opacity: 0.3;
 }
 
 .card-backdrop img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  filter: blur(2px);
+  opacity: 0.3;
 }
 
 .card-info {
   position: relative;
+  z-index: 2;
   padding: 1rem;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(20, 20, 20, 0.8) 30%,
+    #141414 100%
+  );
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    rgba(20, 20, 20, 0.8) 50%,
-    #141414 100%
-  );
 }
 
 .card-title {
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: 600;
   color: white;
-  margin-bottom: 0.5rem;
-  line-height: 1.2;
+  margin: 0 0 0.5rem 0;
+  line-height: 1.3;
 }
 
 .card-meta {
   display: flex;
   gap: 0.5rem;
   margin-bottom: 0.5rem;
-  flex-wrap: wrap;
+  font-size: 0.8rem;
 }
 
 .card-year,
 .card-rating,
 .card-language {
-  background: rgba(255, 255, 255, 0.1);
-  padding: 0.2rem 0.5rem;
+  color: rgba(255, 255, 255, 0.7);
+  background: rgba(0, 0, 0, 0.5);
+  padding: 0.2rem 0.4rem;
   border-radius: 4px;
-  font-size: 0.75rem;
-  color: white;
 }
 
 .card-stars {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 0.5rem;
+  gap: 0.3rem;
+  margin-bottom: 0.8rem;
 }
 
 .star {
-  font-size: 0.8rem;
+  font-size: 0.9rem;
 }
 
 .star.filled {
@@ -253,29 +251,40 @@
 
 .star.half {
   color: #ffd700;
+  opacity: 0.7;
 }
 
 .star.empty {
-  color: #666;
+  color: rgba(255, 255, 255, 0.3);
 }
 
 .rating-text {
+  color: rgba(255, 255, 255, 0.8);
   font-size: 0.8rem;
-  color: #ccc;
+  margin-left: 0.3rem;
 }
 
 .card-description {
-  font-size: 0.8rem;
-  color: #ccc;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.9);
   line-height: 1.4;
   margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 /* Responsividade */
 @media (max-width: 768px) {
-  .movie-card {
+  .tv-series-card {
     flex: 0 0 160px;
     height: 240px;
+  }
+  
+  .card-info {
+    padding: 0.8rem;
   }
   
   .card-title {
@@ -288,13 +297,21 @@
 }
 
 @media (max-width: 480px) {
-  .movie-card {
+  .tv-series-card {
     flex: 0 0 140px;
     height: 210px;
   }
   
+  .card-info {
+    padding: 0.6rem;
+  }
+  
   .card-title {
     font-size: 0.85rem;
+  }
+  
+  .card-meta {
+    font-size: 0.7rem;
   }
   
   .card-description {

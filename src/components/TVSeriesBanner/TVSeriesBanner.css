@@ -1,0 +1,309 @@
+/* TVSeriesBanner.css - Reutilizando estilos do HeroBanner com adaptações para séries */
+.tv-series-banner {
+  position: relative;
+  height: 80vh;
+  min-height: 600px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+}
+
+.banner-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.banner-image {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center right;
+  background-repeat: no-repeat;
+  filter: brightness(0.4);
+}
+
+.banner-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.9) 0%,
+    rgba(0, 0, 0, 0.7) 35%,
+    rgba(0, 0, 0, 0.3) 65%,
+    transparent 100%
+  );
+}
+
+.banner-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.banner-info {
+  flex: 0 0 35%;
+  max-width: 500px;
+  margin-left: 3rem;
+  color: white;
+}
+
+.featured-badge {
+  background: linear-gradient(45deg, #ffd700, #ffed4e);
+  color: #000;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 8px rgba(255, 215, 0, 0.3);
+  animation: pulse-gold 2s ease-in-out infinite;
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+@keyframes pulse-gold {
+  0%, 100% {
+    box-shadow: 0 2px 8px rgba(255, 215, 0, 0.3);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 4px 16px rgba(255, 215, 0, 0.5);
+    transform: scale(1.05);
+  }
+}
+
+.banner-title {
+  font-size: 3.5rem;
+  font-weight: 800;
+  margin: 0 0 0.5rem 0;
+  line-height: 1.1;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  background: linear-gradient(45deg, #ffffff, #e0e0e0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.banner-original-title {
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0 0 1.5rem 0;
+  font-style: italic;
+}
+
+.banner-meta {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.banner-year,
+.banner-rating,
+.banner-language {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.banner-rating {
+  color: #ffd700;
+}
+
+.banner-description {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0 0 2rem 0;
+  max-width: 600px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.banner-actions {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+.btn-watch-now {
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+}
+
+.btn-watch-now:hover {
+  background: linear-gradient(135deg, #0056b3, #004085);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
+}
+
+.btn-watch-now svg {
+  width: 20px;
+  height: 20px;
+}
+
+.btn-trailer {
+  background: transparent;
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.btn-trailer:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: white;
+  transform: translateY(-2px);
+}
+
+/* Responsividade */
+@media (max-width: 1024px) {
+  .banner-info {
+    flex: 0 0 45%;
+    margin-left: 2rem;
+  }
+  
+  .banner-title {
+    font-size: 3rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .tv-series-banner {
+    height: 70vh;
+    min-height: 500px;
+  }
+  
+  .banner-content {
+    padding: 0 1.5rem;
+  }
+  
+  .banner-info {
+    flex: 0 0 55%;
+    margin-left: 1rem;
+  }
+  
+  .banner-title {
+    font-size: 2.5rem;
+  }
+  
+  .banner-original-title {
+    font-size: 1.3rem;
+  }
+  
+  .banner-meta {
+    gap: 1rem;
+  }
+  
+  .banner-description {
+    font-size: 1rem;
+  }
+  
+  .banner-actions {
+    gap: 1rem;
+    justify-content: center;
+  }
+  
+  .btn-watch-now,
+  .btn-trailer {
+    padding: 0.875rem 1.5rem;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .tv-series-banner {
+    height: 60vh;
+    min-height: 400px;
+  }
+  
+  .banner-content {
+    padding: 0 1rem;
+  }
+  
+  .banner-info {
+    flex: 0 0 100%;
+    margin-left: 0;
+    text-align: center;
+  }
+  
+  .banner-title {
+    font-size: 2rem;
+  }
+  
+  .banner-original-title {
+    font-size: 1.1rem;
+  }
+  
+  .banner-meta {
+    justify-content: center;
+    gap: 0.8rem;
+  }
+  
+  .banner-year,
+  .banner-rating,
+  .banner-language {
+    font-size: 0.8rem;
+    padding: 0.3rem 0.6rem;
+  }
+  
+  .banner-description {
+    font-size: 0.9rem;
+    text-align: left;
+  }
+  
+  .banner-actions {
+    justify-content: center;
+    gap: 0.8rem;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .btn-watch-now,
+  .btn-trailer {
+    padding: 0.7rem 1rem;
+    font-size: 0.9rem;
+    width: 100%;
+    max-width: 180px;
+  }
+}

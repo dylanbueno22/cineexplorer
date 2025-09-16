@@ -117,11 +117,8 @@ const HeroBanner: React.FC<HeroBannerProps> = ({ className = '' }) => {
 
   if (loading) {
     return (
-      <div className={`hero-banner loading ${className}`}>
-        <div className="loading-spinner">
-          <div className="spinner"></div>
-          <p>Carregando filmes...</p>
-        </div>
+      <div className={`hero-banner ${className}`}>
+        {/* Carregando sem spinner */}
       </div>
     );
   }

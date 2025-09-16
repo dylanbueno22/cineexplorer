@@ -1,0 +1,177 @@
+/* Crew.css */
+.crew-container {
+  margin: 2rem 0;
+}
+
+.crew-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 2rem;
+  padding-left: 0.5rem;
+  border-left: 4px solid #e50914;
+}
+
+.crew-section {
+  margin-bottom: 2rem;
+}
+
+.crew-section-title {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 1rem;
+  padding-left: 0.5rem;
+  border-left: 3px solid #ff6b6b;
+}
+
+.crew-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1.2rem;
+  padding: 0 0.5rem;
+}
+
+.crew-item {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.crew-item:hover {
+  transform: translateY(-3px);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.crew-photo {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  position: relative;
+}
+
+.crew-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.crew-image.loading {
+  opacity: 0;
+}
+
+.crew-item:hover .crew-image {
+  transform: scale(1.05);
+}
+
+.crew-loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 2;
+}
+
+.crew-placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #2c2c2c, #4a4a4a);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.crew-placeholder::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  animation: shimmer 2s infinite;
+}
+
+.crew-initials {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+  text-transform: uppercase;
+  z-index: 1;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.crew-info {
+  padding: 1rem;
+}
+
+.crew-name {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: white;
+  margin: 0 0 0.4rem 0;
+  line-height: 1.3;
+}
+
+.crew-job {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0;
+  line-height: 1.3;
+  font-style: italic;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .crew-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+  }
+  
+  .crew-photo {
+    height: 180px;
+  }
+  
+  .crew-title {
+    font-size: 1.3rem;
+  }
+  
+  .crew-section-title {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .crew-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 0.8rem;
+  }
+  
+  .crew-photo {
+    height: 160px;
+  }
+  
+  .crew-info {
+    padding: 0.8rem;
+  }
+  
+  .crew-name {
+    font-size: 0.9rem;
+  }
+  
+  .crew-job {
+    font-size: 0.8rem;
+  }
+}

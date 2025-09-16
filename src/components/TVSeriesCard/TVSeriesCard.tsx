@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Heart, Play, Plus, Info } from 'lucide-react';
-import type { Movie } from '../../types/movie';
+import type { TVSeries } from '../../types/tvSeries';
 import { tmdbService } from '../../services/tmdbApi';
-import './MovieCard.css';
+import './TVSeriesCard.css';
 
-interface MovieCardProps {
-  movie: Movie;
+interface TVSeriesCardProps {
+  tvSeries: TVSeries;
   className?: string;
 }
 
-const MovieCard: React.FC<MovieCardProps> = ({ movie, className = '' }) => {
+const TVSeriesCard: React.FC<TVSeriesCardProps> = ({ tvSeries, className = '' }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
   const [imageError, setImageError] = useState(false);
@@ -18,23 +18,23 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, className = '' }) => {
   const navigate = useNavigate();
 
   const handlePlay = (e: React.MouseEvent) => {
-    e.stopPropagation(); // Evita que o clique no botão acione a navegação
-    console.log('Reproduzir filme:', movie.title);
+    e.stopPropagation();
+    console.log('Reproduzir série:', tvSeries.name);
   };
 
   const handleAddToList = (e: React.MouseEvent) => {
-    e.stopPropagation(); // Evita que o clique no botão acione a navegação
-    console.log('Adicionar à lista:', movie.title);
+    e.stopPropagation();
+    console.log('Adicionar à lista:', tvSeries.name);
   };
 
   const handleToggleFavorite = (e: React.MouseEvent) => {
-    e.stopPropagation(); // Evita que o clique no botão acione a navegação
+    e.stopPropagation();
     setIsFavorite(!isFavorite);
-    console.log('Toggle favorito:', movie.title);
+    console.log('Toggle favorito:', tvSeries.name);
   };
 
   const handleViewDetails = () => {
-    navigate(`/movie/${movie.id}`);
+    navigate(`/tv/${tvSeries.id}`);
   };
 
   const handleImageError = () => {
@@ -45,8 +45,8 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, className = '' }) => {
     setBackdropError(true);
   };
 
-  const posterUrl = tmdbService.getImageUrl(movie.poster_path, 'w500');
-  const backdropUrl = tmdbService.getBackdropUrl(movie.backdrop_path, 'w780');
+  const posterUrl = tmdbService.getImageUrl(tvSeries.poster_path, 'w500');
+  const backdropUrl = tmdbService.getBackdropUrl(tvSeries.backdrop_path, 'w780');
 
   const renderStars = (rating: number) => {
     const fullStars = Math.floor(rating / 2);
@@ -71,7 +71,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, className = '' }) => {
 
   return (
     <div 
-      className={`movie-card ${className} ${isHovered ? 'hovered' : ''}`}
+      className={`tv-series-card ${className} ${isHovered ? 'hovered' : ''}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={handleViewDetails}
@@ -81,14 +81,14 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, className = '' }) => {
         {posterUrl && !imageError ? (
           <img 
             src={posterUrl} 
-            alt={movie.title}
+            alt={tvSeries.name}
             loading="lazy"
             onError={handleImageError}
           />
         ) : (
           <div className="poster-placeholder">
-            <div className="placeholder-icon">🎬</div>
-            <span>{movie.title}</span>
+            <div className="placeholder-icon">📺</div>
+            <span>{tvSeries.name}</span>
           </div>
         )}
         
@@ -135,7 +135,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, className = '' }) => {
             <div className="card-backdrop">
               <img 
                 src={backdropUrl} 
-                alt={movie.title}
+                alt={tvSeries.name}
                 onError={handleBackdropError}
               />
             </div>
@@ -143,37 +143,37 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, className = '' }) => {
             <div className="card-backdrop backdrop-placeholder">
               <div className="backdrop-placeholder-content">
                 <div className="placeholder-icon">🎭</div>
-                <span>{movie.title}</span>
+                <span>{tvSeries.name}</span>
               </div>
             </div>
           )}
           
           <div className="card-info">
-            <h3 className="card-title">{movie.title}</h3>
+            <h3 className="card-title">{tvSeries.name}</h3>
             
             <div className="card-meta">
               <span className="card-year">
-                {new Date(movie.release_date).getFullYear()}
+                {new Date(tvSeries.first_air_date).getFullYear()}
               </span>
               <span className="card-rating">
-                {movie.adult ? '18+' : 'L'}
+                {tvSeries.adult ? '18+' : 'L'}
               </span>
               <span className="card-language">
-                {movie.original_language.toUpperCase()}
+                {tvSeries.original_language.toUpperCase()}
               </span>
             </div>
 
             <div className="card-stars">
-              {renderStars(movie.vote_average)}
+              {renderStars(tvSeries.vote_average)}
               <span className="rating-text">
-                {movie.vote_average.toFixed(1)}
+                {tvSeries.vote_average.toFixed(1)}
               </span>
             </div>
 
             <p className="card-description">
-              {movie.overview.length > 120 
-                ? `${movie.overview.substring(0, 120)}...` 
-                : movie.overview
+              {tvSeries.overview.length > 120 
+                ? `${tvSeries.overview.substring(0, 120)}...` 
+                : tvSeries.overview
               }
             </p>
           </div>
@@ -183,4 +183,4 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, className = '' }) => {
   );
 };
 
-export default MovieCard;
+export default TVSeriesCard;

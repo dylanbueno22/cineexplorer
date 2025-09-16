@@ -1,5 +1,5 @@
-/* MovieCarousel.css - Usando as mesmas configurações do TVSeriesCarousel */
-.movie-carousel-section {
+/* TVSeriesCarousel.css - Reutilizando estilos do MovieCarousel */
+.tv-series-carousel {
   margin-bottom: 3rem;
   position: relative;
 }

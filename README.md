@@ -11,20 +11,23 @@
 
 ### 🎯 **Implementadas**
 - ✅ **Layout Netflix** com carrosséis horizontais responsivos
-- ✅ **Hero Banner** com filme em destaque selecionado inteligentemente
-- ✅ **Carrosséis por gênero** (Ação, Comédia, Drama, Animação, Suspense, Terror)
-- ✅ **Cards de filme** interativos com hover effects avançados
+- ✅ **Hero Banner** com filme/série em destaque selecionado inteligentemente
+- ✅ **Páginas separadas** para Filmes e Séries de TV
+- ✅ **Carrosséis por gênero** (Ação, Comédia, Drama, Animação, Ficção Científica, Romance, Mistério, Crime)
+- ✅ **Cards interativos** com hover effects avançados e fallbacks para imagens
 - ✅ **Header responsivo** com logo, navegação e busca expansível
 - ✅ **Sistema de busca** com animações suaves
-- ✅ **Seleção inteligente** de filmes baseada em popularidade e gênero
+- ✅ **Seleção inteligente** baseada em popularidade e gênero
 - ✅ **Design responsivo** para mobile, tablet e desktop
 - ✅ **Ícones Lucide** para interface moderna e consistente
 - ✅ **Tipografia melhorada** com fontes elegantes
+- ✅ **Sistema de fallback** para imagens quebradas
 
 ### 🔧 **Tecnologias Utilizadas**
 - **React 18** com TypeScript para desenvolvimento type-safe
 - **Vite** para build rápido e desenvolvimento eficiente
-- **TMDB API** para dados completos de filmes
+- **TMDB API** para dados completos de filmes e séries
+- **React Router** para navegação entre páginas
 - **Lucide React** para ícones modernos e consistentes
 - **CSS Modules** para estilização organizada
 - **Hooks customizados** para gerenciamento de estado
@@ -53,6 +56,49 @@ npm run dev
 ### **Acesse**
 Abra [http://localhost:5173](http://localhost:5173) no seu navegador.
 
+## 🚀 Deploy
+
+### **Build de Produção**
+```bash
+# Criar build otimizado
+npm run build
+
+# Preview do build local
+npm run preview
+```
+
+### **Opções de Deploy**
+
+#### **1. Netlify (Recomendado)**
+1. Acesse [netlify.com](https://netlify.com)
+2. Faça login/cadastro
+3. Arraste a pasta `dist/` para a área de deploy
+4. Ou conecte com GitHub para deploy automático
+
+#### **2. Vercel**
+1. Acesse [vercel.com](https://vercel.com)
+2. Faça login com GitHub
+3. Importe o repositório
+4. Deploy automático
+
+#### **3. GitHub Pages**
+1. Faça push do código para GitHub
+2. Vá em Settings > Pages
+3. Selecione a branch e pasta `dist/`
+
+#### **4. Surge.sh (Rápido)**
+```bash
+npm install -g surge
+cd dist
+surge
+```
+
+### **Configuração para Deploy**
+- ✅ **Arquivo `_redirects`** incluído para roteamento SPA
+- ✅ **Build otimizado** com Vite
+- ✅ **Assets comprimidos** (CSS: 5.76 kB, JS: 79.53 kB)
+- ✅ **Compatibilidade** com todas as plataformas de deploy
+
 ## 📁 Estrutura do Projeto
 
 ```
@@ -76,14 +122,23 @@ src/
 │   └── Auth/               # Botões de autenticação
 ├── pages/                  # Páginas da aplicação
 │   ├── MoviesPage.tsx      # Página principal de filmes
-│   └── MoviesPage.css      # Estilos da página
+│   ├── MoviesPage.css      # Estilos da página de filmes
+│   ├── TVSeriesPage.tsx    # Página principal de séries
+│   ├── TVSeriesPage.css    # Estilos da página de séries
+│   ├── MovieDetailsPage.tsx # Página de detalhes do filme
+│   └── MovieDetailsPage.css # Estilos da página de detalhes
 ├── hooks/                  # Hooks customizados
 │   ├── useMovies.ts        # Hook para filmes populares
-│   └── useMoviesByGenre.ts # Hook para filmes por gênero
+│   ├── useMoviesByGenre.ts # Hook para filmes por gênero
+│   ├── useTVSeries.ts      # Hook para séries populares
+│   ├── useTVSeriesByGenre.ts # Hook para séries por gênero
+│   └── useMovieDetails.ts  # Hook para detalhes do filme
 ├── services/               # Serviços de API
 │   └── tmdbApi.ts          # Integração completa com TMDB
 ├── types/                  # Definições TypeScript
-│   └── movie.ts            # Interfaces de filmes
+│   ├── movie.ts            # Interfaces de filmes
+│   ├── movieDetails.ts     # Interfaces de detalhes de filmes
+│   └── tvSeries.ts         # Interfaces de séries
 ├── App.tsx                 # Componente raiz
 ├── App.css                 # Estilos globais
 ├── index.css               # Estilos base
@@ -109,8 +164,21 @@ src/
 - 😂 **Comédia** - Filmes de comédia
 - 🎭 **Drama** - Filmes dramáticos
 - 🎨 **Animação** - Filmes animados
-- 😱 **Suspense** - Filmes de suspense e thriller
-- 👻 **Terror** - Filmes de terror
+- 🔬 **Ficção Científica** - Filmes de sci-fi
+- 💕 **Romance** - Filmes românticos
+- 🔍 **Mistério** - Filmes de mistério
+- 🚨 **Crime** - Filmes de crime
+
+### **Categorias de Séries**
+- 🔥 **Em Alta** - Séries populares do momento
+- ⚡ **Ação e Aventura** - Séries de ação
+- 😂 **Comédia** - Séries de comédia
+- 🎭 **Drama** - Séries dramáticas
+- 🎨 **Animação** - Séries animadas
+- 🔬 **Ficção Científica** - Séries de sci-fi
+- 💕 **Romance** - Séries românticas
+- 🔍 **Mistério** - Séries de mistério
+- 🚨 **Crime** - Séries de crime
 
 ## 🔑 Configuração da API
 
@@ -125,6 +193,10 @@ const ACCESS_TOKEN = 'seu_token_tmdb_aqui';
 - `/discover/movie` - Filmes por gênero
 - `/trending/movie/week` - Filmes em tendência
 - `/search/movie` - Busca de filmes
+- `/tv/popular` - Séries populares
+- `/discover/tv` - Séries por gênero
+- `/movie/{id}` - Detalhes do filme
+- `/movie/{id}/credits` - Elenco e equipe do filme
 
 ## 📱 Funcionalidades dos Cards
 
@@ -162,13 +234,13 @@ O sistema seleciona automaticamente o filme mais chamativo para o banner princip
 
 ### **Funcionalidades Planejadas**
 - [ ] **Sistema de favoritos** persistente com localStorage
-- [ ] **Página de detalhes** completa do filme
+- [ ] **Página de detalhes** completa das séries
 - [ ] **Trailers integrados** via YouTube API
 - [ ] **Busca avançada** com filtros por gênero, ano, rating
-- [ ] **Página de séries** TV com carrosséis similares
 - [ ] **Sistema de autenticação** completo
 - [ ] **Listas personalizadas** do usuário
 - [ ] **Recomendações** baseadas em histórico de visualização
+- [ ] **Player de vídeo** integrado
 
 ### **Melhorias Técnicas**
 - [ ] **Testes unitários** com Jest e React Testing Library
@@ -229,12 +301,14 @@ Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalh
 
 ## 📊 Estatísticas do Projeto
 
-- **Componentes**: 8 componentes principais
-- **Hooks**: 2 hooks customizados
-- **Páginas**: 1 página principal
-- **Serviços**: 1 serviço de API
+- **Componentes**: 15+ componentes principais
+- **Hooks**: 5 hooks customizados
+- **Páginas**: 3 páginas (Filmes, Séries, Detalhes)
+- **Serviços**: 1 serviço de API completo
 - **Tipos**: Interfaces TypeScript completas
 - **Responsividade**: 3 breakpoints (desktop, tablet, mobile)
+- **Gêneros**: 9 categorias de filmes e séries
+- **Build**: Otimizado (CSS: 5.76 kB, JS: 79.53 kB)
 
 ---
 

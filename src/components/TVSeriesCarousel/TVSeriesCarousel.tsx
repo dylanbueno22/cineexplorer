@@ -1,20 +1,21 @@
 import React, { useRef, useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import type { Movie } from '../../types/movie';
-import MovieCard from '../MovieCard/MovieCard';
-import './MovieCarousel.css';
+import type { TVSeries } from '../../types/tvSeries';
+import TVSeriesCard from '../TVSeriesCard/TVSeriesCard';
+import './TVSeriesCarousel.css';
 
-interface MovieCarouselProps {
+interface TVSeriesCarouselProps {
   title: string;
-  movies: Movie[];
+  tvSeries: TVSeries[];
   loading?: boolean;
   error?: string | null;
+  genreId?: number;
   className?: string;
 }
 
-const MovieCarousel: React.FC<MovieCarouselProps> = ({
+const TVSeriesCarousel: React.FC<TVSeriesCarouselProps> = ({
   title,
-  movies,
+  tvSeries,
   loading = false,
   error = null,
   className = ''
@@ -56,15 +57,15 @@ const MovieCarousel: React.FC<MovieCarouselProps> = ({
       container.addEventListener('scroll', checkScrollButtons);
       return () => container.removeEventListener('scroll', checkScrollButtons);
     }
-  }, [movies]);
+  }, [tvSeries]);
 
   if (loading) {
     return (
-      <div className={`movie-carousel-section ${className}`}>
+      <div className={`tv-series-carousel ${className}`}>
         <h3 className="carousel-title">{title}</h3>
         <div className="carousel-loading">
           <div className="loading-spinner"></div>
-          <p>Carregando filmes...</p>
+          <p>Carregando séries...</p>
         </div>
       </div>
     );
@@ -72,28 +73,28 @@ const MovieCarousel: React.FC<MovieCarouselProps> = ({
 
   if (error) {
     return (
-      <div className={`movie-carousel-section ${className}`}>
+      <div className={`tv-series-carousel ${className}`}>
         <h3 className="carousel-title">{title}</h3>
         <div className="carousel-error">
-          <p>Erro ao carregar filmes: {error}</p>
+          <p>Erro ao carregar séries: {error}</p>
         </div>
       </div>
     );
   }
 
-  if (!movies || movies.length === 0) {
+  if (!tvSeries || tvSeries.length === 0) {
     return (
-      <div className={`movie-carousel-section ${className}`}>
+      <div className={`tv-series-carousel ${className}`}>
         <h3 className="carousel-title">{title}</h3>
         <div className="carousel-empty">
-          <p>Nenhum filme encontrado</p>
+          <p>Nenhuma série encontrada</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className={`movie-carousel-section ${className}`}>
+    <div className={`tv-series-carousel ${className}`}>
       <h3 className="carousel-title">{title}</h3>
       
       <div className="carousel-container">
@@ -112,10 +113,10 @@ const MovieCarousel: React.FC<MovieCarouselProps> = ({
           ref={scrollContainerRef}
         >
           <div className="carousel-content">
-            {movies.map((movie, index) => (
-              <MovieCard 
-                key={`${movie.id}-${index}`}
-                movie={movie}
+            {tvSeries.map((series, index) => (
+              <TVSeriesCard 
+                key={`${series.id}-${index}`}
+                tvSeries={series}
                 className="carousel-item"
               />
             ))}
@@ -136,4 +137,4 @@ const MovieCarousel: React.FC<MovieCarouselProps> = ({
   );
 };
 
-export default MovieCarousel;
+export default TVSeriesCarousel;

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import './Navigation.css';
 
 interface NavigationProps {
@@ -6,9 +7,15 @@ interface NavigationProps {
 }
 
 const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
-  const handleNavClick = (item: string) => {
-    console.log(`Navegando para: ${item}`);
-    // Implementar navegação futura
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleNavClick = (path: string) => {
+    navigate(path);
+  };
+
+  const isActive = (path: string) => {
+    return location.pathname === path || (path === '/filmes' && location.pathname === '/');
   };
 
   return (
@@ -16,16 +23,16 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
       <ul className="nav-list">
         <li className="nav-item">
           <button 
-            className="nav-link active"
-            onClick={() => handleNavClick('filmes')}
+            className={`nav-link ${isActive('/filmes') ? 'active' : ''}`}
+            onClick={() => handleNavClick('/filmes')}
           >
             Filmes
           </button>
         </li>
         <li className="nav-item">
           <button 
-            className="nav-link"
-            onClick={() => handleNavClick('series')}
+            className={`nav-link ${isActive('/series') ? 'active' : ''}`}
+            onClick={() => handleNavClick('/series')}
           >
             Séries
           </button>
@@ -33,7 +40,7 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
         <li className="nav-item">
           <button 
             className="nav-link"
-            onClick={() => handleNavClick('favoritos')}
+            onClick={() => handleNavClick('/favoritos')}
           >
             Favoritos
           </button>

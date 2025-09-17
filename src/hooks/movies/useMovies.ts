@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import type { Movie, MovieDetails } from '../types/movie';
-import { tmdbService } from '../services/tmdbApi';
+import type { Movie, MovieDetails } from '../../types/movie';
+import { tmdbService } from '../../services/tmdbApi';
 
 export const useMovies = () => {
   const [movies, setMovies] = useState<Movie[]>([]);

@@ -16,12 +16,15 @@
 - ✅ **Carrosséis por gênero** (Ação, Comédia, Drama, Animação, Ficção Científica, Romance, Mistério, Crime)
 - ✅ **Cards interativos** com hover effects avançados e fallbacks para imagens
 - ✅ **Header responsivo** com logo, navegação e busca expansível
-- ✅ **Sistema de busca** com animações suaves
+- ✅ **Sistema de busca** com filtros em tempo real por nome
+- ✅ **Páginas de detalhes** completas para filmes e séries
+- ✅ **Seção de elenco e equipe** com fotos e informações
 - ✅ **Seleção inteligente** baseada em popularidade e gênero
-- ✅ **Design responsivo** para mobile, tablet e desktop
+- ✅ **Design responsivo** otimizado para mobile, tablet e desktop
 - ✅ **Ícones Lucide** para interface moderna e consistente
 - ✅ **Tipografia melhorada** com fontes elegantes
 - ✅ **Sistema de fallback** para imagens quebradas
+- ✅ **Navegação mobile** otimizada com botões compactos
 
 ### 🔧 **Tecnologias Utilizadas**
 - **React 18** com TypeScript para desenvolvimento type-safe
@@ -108,31 +111,48 @@ src/
 │   │   ├── Header.tsx      # Componente principal
 │   │   └── Header.css      # Estilos do header
 │   ├── HeroBanner.*        # Banner principal com filme em destaque
+│   ├── TVSeriesBanner.*    # Banner principal com série em destaque
 │   ├── MovieCarousel/      # Carrossel horizontal de filmes
 │   │   ├── MovieCarousel.tsx
 │   │   └── MovieCarousel.css
+│   ├── TVSeriesCarousel/   # Carrossel horizontal de séries
+│   │   ├── TVSeriesCarousel.tsx
+│   │   └── TVSeriesCarousel.css
 │   ├── MovieCard/          # Card individual do filme
 │   │   ├── MovieCard.tsx
 │   │   └── MovieCard.css
+│   ├── TVSeriesCard/       # Card individual da série
+│   │   ├── TVSeriesCard.tsx
+│   │   └── TVSeriesCard.css
 │   ├── Search/             # Sistema de busca expansível
 │   │   ├── SearchButton.tsx
 │   │   └── SearchButton.css
 │   ├── Navigation/         # Links de navegação
 │   ├── Logo/               # Logo do CineExplorer
-│   └── Auth/               # Botões de autenticação
+│   ├── Auth/               # Botões de autenticação
+│   └── MovieDetails/       # Componentes de detalhes
+│       ├── Cast/           # Componente de elenco
+│       └── Crew/           # Componente de equipe
 ├── pages/                  # Páginas da aplicação
-│   ├── MoviesPage.tsx      # Página principal de filmes
-│   ├── MoviesPage.css      # Estilos da página de filmes
-│   ├── TVSeriesPage.tsx    # Página principal de séries
-│   ├── TVSeriesPage.css    # Estilos da página de séries
-│   ├── MovieDetailsPage.tsx # Página de detalhes do filme
-│   └── MovieDetailsPage.css # Estilos da página de detalhes
-├── hooks/                  # Hooks customizados
-│   ├── useMovies.ts        # Hook para filmes populares
-│   ├── useMoviesByGenre.ts # Hook para filmes por gênero
-│   ├── useTVSeries.ts      # Hook para séries populares
-│   ├── useTVSeriesByGenre.ts # Hook para séries por gênero
-│   └── useMovieDetails.ts  # Hook para detalhes do filme
+│   ├── movies/             # Páginas de filmes
+│   │   ├── MoviesPage.tsx  # Página principal de filmes
+│   │   ├── MoviesPage.css  # Estilos da página de filmes
+│   │   ├── MovieDetailsPage.tsx # Página de detalhes do filme
+│   │   └── MovieDetailsPage.css # Estilos da página de detalhes
+│   └── tv-series/          # Páginas de séries
+│       ├── TVSeriesPage.tsx # Página principal de séries
+│       ├── TVSeriesPage.css # Estilos da página de séries
+│       ├── TVSeriesDetailsPage.tsx # Página de detalhes da série
+│       └── TVSeriesDetailsPage.css # Estilos da página de detalhes
+├── hooks/                  # Hooks customizados organizados
+│   ├── movies/             # Hooks de filmes
+│   │   ├── useMovies.ts    # Hook para filmes populares
+│   │   ├── useMoviesByGenre.ts # Hook para filmes por gênero
+│   │   └── useMovieDetails.ts # Hook para detalhes do filme
+│   └── tv-series/          # Hooks de séries
+│       ├── useTVSeries.ts  # Hook para séries populares
+│       ├── useTVSeriesByGenre.ts # Hook para séries por gênero
+│       └── useTVSeriesDetails.ts # Hook para detalhes da série
 ├── services/               # Serviços de API
 │   └── tmdbApi.ts          # Integração completa com TMDB
 ├── types/                  # Definições TypeScript
@@ -201,19 +221,18 @@ const ACCESS_TOKEN = 'seu_token_tmdb_aqui';
 ## 📱 Funcionalidades dos Cards
 
 ### **Interações Avançadas**
-- **Hover**: Expande com detalhes completos do filme
-- **Play**: Botão para reproduzir (pronto para implementação)
-- **Adicionar**: Botão para lista de favoritos
-- **Favoritar**: Sistema de favoritos com estado local
+- **Hover**: Expande com detalhes completos do filme/série
+- **Click**: Navega para página de detalhes
+- **Responsivo**: Adapta-se perfeitamente a diferentes tamanhos de tela
 
 ### **Informações Exibidas**
-- **Poster** em alta qualidade
+- **Poster** em alta qualidade com fallback
 - **Título** e ano de lançamento
 - **Avaliação** com sistema de estrelas
 - **Sinopse** resumida e legível
 - **Classificação** etária
 - **Idioma** original
-- **Badge de destaque** para filmes selecionados
+- **Badge de destaque** para conteúdo selecionado
 
 ## 🎯 Algoritmo de Seleção Inteligente
 
@@ -234,13 +253,14 @@ O sistema seleciona automaticamente o filme mais chamativo para o banner princip
 
 ### **Funcionalidades Planejadas**
 - [ ] **Sistema de favoritos** persistente com localStorage
-- [ ] **Página de detalhes** completa das séries
 - [ ] **Trailers integrados** via YouTube API
 - [ ] **Busca avançada** com filtros por gênero, ano, rating
 - [ ] **Sistema de autenticação** completo
 - [ ] **Listas personalizadas** do usuário
 - [ ] **Recomendações** baseadas em histórico de visualização
 - [ ] **Player de vídeo** integrado
+- [ ] **Modo escuro/claro** toggle
+- [ ] **Internacionalização** (i18n) para múltiplos idiomas
 
 ### **Melhorias Técnicas**
 - [ ] **Testes unitários** com Jest e React Testing Library
@@ -301,14 +321,15 @@ Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalh
 
 ## 📊 Estatísticas do Projeto
 
-- **Componentes**: 15+ componentes principais
-- **Hooks**: 5 hooks customizados
-- **Páginas**: 3 páginas (Filmes, Séries, Detalhes)
+- **Componentes**: 20+ componentes principais
+- **Hooks**: 6 hooks customizados organizados
+- **Páginas**: 5 páginas (Filmes, Séries, Detalhes de Filmes, Detalhes de Séries)
 - **Serviços**: 1 serviço de API completo
 - **Tipos**: Interfaces TypeScript completas
 - **Responsividade**: 3 breakpoints (desktop, tablet, mobile)
 - **Gêneros**: 9 categorias de filmes e séries
-- **Build**: Otimizado (CSS: 5.76 kB, JS: 79.53 kB)
+- **Funcionalidades**: Busca em tempo real, navegação mobile otimizada
+- **Build**: Otimizado e limpo
 
 ---
 

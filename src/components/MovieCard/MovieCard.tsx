@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Heart, Play, Plus, Info } from 'lucide-react';
+import { Play, Plus, Info } from 'lucide-react';
 import type { Movie } from '../../types/movie';
 import { tmdbService } from '../../services/tmdbApi';
 import './MovieCard.css';
@@ -12,11 +12,10 @@ interface MovieCardProps {
 
 const MovieCard: React.FC<MovieCardProps> = ({ movie, className = '' }) => {
   const [isHovered, setIsHovered] = useState(false);
-  const [isFavorite, setIsFavorite] = useState(false);
   const [imageError, setImageError] = useState(false);
   const [backdropError, setBackdropError] = useState(false);
   const navigate = useNavigate();
-
+  
   const handlePlay = (e: React.MouseEvent) => {
     e.stopPropagation(); // Evita que o clique no botão acione a navegação
     console.log('Reproduzir filme:', movie.title);
@@ -25,12 +24,6 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, className = '' }) => {
   const handleAddToList = (e: React.MouseEvent) => {
     e.stopPropagation(); // Evita que o clique no botão acione a navegação
     console.log('Adicionar à lista:', movie.title);
-  };
-
-  const handleToggleFavorite = (e: React.MouseEvent) => {
-    e.stopPropagation(); // Evita que o clique no botão acione a navegação
-    setIsFavorite(!isFavorite);
-    console.log('Toggle favorito:', movie.title);
   };
 
   const handleViewDetails = () => {
@@ -116,14 +109,6 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, className = '' }) => {
               title="Ver detalhes"
             >
               <Info size={16} />
-            </button>
-            
-            <button 
-              className={`action-btn favorite-btn ${isFavorite ? 'active' : ''}`}
-              onClick={handleToggleFavorite}
-              title={isFavorite ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}
-            >
-              <Heart size={16} />
             </button>
           </div>
         </div>

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import type { Movie } from '../types/movie';
-import { tmdbService } from '../services/tmdbApi';
+import type { Movie } from '../../types/movie';
+import { tmdbService } from '../../services/tmdbApi';
 
 interface UseMoviesByGenreResult {
   movies: Movie[];

@@ -102,13 +102,14 @@
     to bottom,
     rgba(0, 0, 0, 0.1) 0%,
     rgba(0, 0, 0, 0.3) 50%,
-    rgba(0, 0, 0, 0.7) 100%
+    rgba(0, 0, 0, 0.8) 100%
   );
   opacity: 0;
   transition: opacity 0.3s ease;
   display: flex;
   align-items: flex-end;
   padding: 1rem;
+  z-index: 2;
 }
 
 .movie-card:hover .card-overlay {
@@ -135,6 +136,8 @@
   cursor: pointer;
   transition: all 0.3s ease;
   backdrop-filter: blur(10px);
+  z-index: 3;
+  position: relative;
 }
 
 .action-btn:hover {
@@ -151,10 +154,6 @@
   background: white;
 }
 
-.favorite-btn.active {
-  background: #e50914;
-  color: white;
-}
 
 .info-btn {
   background: rgba(0, 0, 0, 0.7);

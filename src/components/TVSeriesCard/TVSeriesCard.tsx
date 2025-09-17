@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Heart, Play, Plus, Info } from 'lucide-react';
+import { Play, Plus, Info } from 'lucide-react';
 import type { TVSeries } from '../../types/tvSeries';
 import { tmdbService } from '../../services/tmdbApi';
 import './TVSeriesCard.css';
@@ -12,11 +12,10 @@ interface TVSeriesCardProps {
 
 const TVSeriesCard: React.FC<TVSeriesCardProps> = ({ tvSeries, className = '' }) => {
   const [isHovered, setIsHovered] = useState(false);
-  const [isFavorite, setIsFavorite] = useState(false);
   const [imageError, setImageError] = useState(false);
   const [backdropError, setBackdropError] = useState(false);
   const navigate = useNavigate();
-
+  
   const handlePlay = (e: React.MouseEvent) => {
     e.stopPropagation();
     console.log('Reproduzir série:', tvSeries.name);
@@ -25,12 +24,6 @@ const TVSeriesCard: React.FC<TVSeriesCardProps> = ({ tvSeries, className = '' })
   const handleAddToList = (e: React.MouseEvent) => {
     e.stopPropagation();
     console.log('Adicionar à lista:', tvSeries.name);
-  };
-
-  const handleToggleFavorite = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setIsFavorite(!isFavorite);
-    console.log('Toggle favorito:', tvSeries.name);
   };
 
   const handleViewDetails = () => {
@@ -116,14 +109,6 @@ const TVSeriesCard: React.FC<TVSeriesCardProps> = ({ tvSeries, className = '' })
               title="Ver detalhes"
             >
               <Info size={16} />
-            </button>
-            
-            <button 
-              className={`action-btn favorite-btn ${isFavorite ? 'active' : ''}`}
-              onClick={handleToggleFavorite}
-              title={isFavorite ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}
-            >
-              <Heart size={16} />
             </button>
           </div>
         </div>

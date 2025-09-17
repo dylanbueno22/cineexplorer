@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import type { Movie } from '../types/movie';
 import { tmdbService } from '../services/tmdbApi';
-import { useMovies } from '../hooks/useMovies';
+import { useMovies } from '../hooks/movies';
 import './HeroBanner.css';
 
 interface HeroBannerProps {

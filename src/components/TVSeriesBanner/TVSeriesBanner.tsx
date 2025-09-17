@@ -79,61 +79,86 @@ const TVSeriesBanner: React.FC<TVSeriesBannerProps> = ({ tvSeries, className = '
     console.log('Mais informações:', featuredSeries.name);
   };
 
+  const renderStars = (rating: number) => {
+    const fullStars = Math.floor(rating / 2);
+    const hasHalfStar = rating % 2 >= 1;
+    const stars = [];
+
+    for (let i = 0; i < fullStars; i++) {
+      stars.push(<span key={i} className="star filled">★</span>);
+    }
+
+    if (hasHalfStar) {
+      stars.push(<span key="half" className="star half">★</span>);
+    }
+
+    const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+    for (let i = 0; i < emptyStars; i++) {
+      stars.push(<span key={`empty-${i}`} className="star empty">☆</span>);
+    }
+
+    return stars;
+  };
+
   return (
     <div className={`tv-series-banner ${className}`}>
-      <div className="banner-background">
-        {backdropUrl && (
-          <div 
-            className="banner-image"
-            style={{
-              backgroundImage: `url(${backdropUrl})`
-            }}
-          />
-        )}
-        <div className="banner-overlay" />
-      </div>
+      <div 
+        className="banner-background"
+        style={{
+          backgroundImage: `linear-gradient(to right, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 35%, rgba(0, 0, 0, 0.1) 100%), url(${backdropUrl})`,
+        }}
+      >
+        <div className="banner-overlay">
+          {/* Conteúdo principal */}
+          <div className="banner-content">
+            <div className="banner-info">
+              <h1 className="banner-title">
+                <span className="title-main">{featuredSeries.name}</span>
+                {featuredSeries.original_name !== featuredSeries.name && (
+                  <span className="title-original">({featuredSeries.original_name})</span>
+                )}
+              </h1>
+              
+              <p className="banner-description">
+                {featuredSeries.overview}
+              </p>
 
-      <div className="banner-content">
-        <div className="banner-info">
-          <div className="featured-badge">
-            ⭐ DESTAQUE
-          </div>
-          
-          <h1 className="banner-title">{featuredSeries.name}</h1>
-          
-          {featuredSeries.original_name !== featuredSeries.name && (
-            <h2 className="banner-original-title">{featuredSeries.original_name}</h2>
-          )}
+              <div className="banner-movie-info">
+                <div className="movie-meta">
+                  <span className="featured-badge">⭐ DESTAQUE</span>
+                  <span className="release-year">
+                    {new Date(featuredSeries.first_air_date).getFullYear()}
+                  </span>
+                  <span className="movie-rating">
+                    {featuredSeries.adult ? '18+' : 'Livre'}
+                  </span>
+                  <span className="movie-language">
+                    {featuredSeries.original_language.toUpperCase()}
+                  </span>
+                </div>
+                
+                <div className="hero-rating">
+                  <div className="stars">
+                    {renderStars(featuredSeries.vote_average)}
+                  </div>
+                  <span className="rating-text">
+                    {featuredSeries.vote_average.toFixed(1)}/10 ({featuredSeries.vote_count} votos)
+                  </span>
+                </div>
+              </div>
 
-          <div className="banner-meta">
-            <span className="banner-year">
-              {new Date(featuredSeries.first_air_date).getFullYear()}
-            </span>
-            <span className="banner-rating">
-              ⭐ {featuredSeries.vote_average.toFixed(1)}
-            </span>
-            <span className="banner-language">
-              {featuredSeries.original_language.toUpperCase()}
-            </span>
-          </div>
-
-          <p className="banner-description">
-            {featuredSeries.overview.length > 200 
-              ? `${featuredSeries.overview.substring(0, 200)}...` 
-              : featuredSeries.overview
-            }
-          </p>
-
-          <div className="banner-actions">
-            <button className="btn-watch-now" onClick={handlePlay}>
-              <svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M8 5v14l11-7z"/>
-              </svg>
-              Assistir Agora
-            </button>
-            <button className="btn-trailer" onClick={handleMoreInfo}>
-              Mais Info
-            </button>
+              <div className="banner-actions">
+                <button className="btn-watch-now" onClick={handlePlay}>
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M8 5v14l11-7z"/>
+                  </svg>
+                  Assistir Agora
+                </button>
+                <button className="btn-trailer" onClick={handleMoreInfo}>
+                  Trailer
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -7,9 +7,17 @@ import './Header.css';
 
 interface HeaderProps {
   className?: string;
+  onSearch?: (query: string) => void;
+  onClearSearch?: () => void;
+  searchPlaceholder?: string;
 }
 
-const Header: React.FC<HeaderProps> = ({ className = '' }) => {
+const Header: React.FC<HeaderProps> = ({ 
+  className = '', 
+  onSearch, 
+  onClearSearch, 
+  searchPlaceholder = 'Pesquisar...' 
+}) => {
   return (
     <header className={`header ${className}`}>
       <div className="header-container">
@@ -24,7 +32,11 @@ const Header: React.FC<HeaderProps> = ({ className = '' }) => {
 
         {/* Botão de Pesquisa e Autenticação */}
         <div className="header-right">
-          <SearchButton />
+          <SearchButton 
+            placeholder={searchPlaceholder}
+            onSearch={onSearch}
+            onClear={onClearSearch}
+          />
           <AuthButtons />
         </div>
       </div>

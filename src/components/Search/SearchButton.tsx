@@ -4,33 +4,54 @@ import './SearchButton.css';
 
 interface SearchButtonProps {
   className?: string;
+  placeholder?: string;
+  onSearch?: (query: string) => void;
+  onClear?: () => void;
 }
 
-const SearchButton: React.FC<SearchButtonProps> = ({ className = '' }) => {
+const SearchButton: React.FC<SearchButtonProps> = ({ 
+  className = '', 
+  placeholder = 'Pesquisar...',
+  onSearch,
+  onClear
+}) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleSearchClick = () => {
     setIsExpanded(!isExpanded);
+    if (!isExpanded && searchQuery.trim()) {
+      // Se está fechando e há uma query, limpar
+      setSearchQuery('');
+      onClear?.();
+    }
   };
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      console.log('Pesquisando por:', searchQuery);
-      // Implementar lógica de pesquisa futura
+      onSearch?.(searchQuery.trim());
     }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(e.target.value);
+    const value = e.target.value;
+    setSearchQuery(value);
+    
+    // Pesquisa em tempo real
+    if (value.trim()) {
+      onSearch?.(value.trim());
+    } else {
+      onClear?.();
+    }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Escape') {
       setIsExpanded(false);
       setSearchQuery('');
+      onClear?.();
     }
   };
 
@@ -48,7 +69,7 @@ const SearchButton: React.FC<SearchButtonProps> = ({ className = '' }) => {
           <input
             ref={inputRef}
             type="text"
-            placeholder="Pesquisar filmes..."
+            placeholder={placeholder}
             value={searchQuery}
             onChange={handleInputChange}
             onKeyDown={handleKeyDown}

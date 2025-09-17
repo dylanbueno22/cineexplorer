@@ -1,18 +1,19 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useMovieDetails } from '../hooks/useMovieDetails';
-import Cast from '../components/MovieDetails/Cast/Cast';
-import Crew from '../components/MovieDetails/Crew/Crew';
-import { tmdbService } from '../services/tmdbApi';
+import { useTVSeriesDetails } from '../../hooks/tv-series/useTVSeriesDetails';
+import Cast from '../../components/MovieDetails/Cast/Cast';
+import Crew from '../../components/MovieDetails/Crew/Crew';
+import { tmdbService } from '../../services/tmdbApi';
 import { ArrowLeft, Star, Calendar, Clock } from 'lucide-react';
-import './MovieDetailsPage.css';
+import type { Genre, ProductionCompany, ProductionCountry, SpokenLanguage } from '../../types/movie';
+import './TVSeriesDetailsPage.css';
 
-const MovieDetailsPage: React.FC = () => {
+const TVSeriesDetailsPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const movieId = id ? parseInt(id, 10) : null;
+  const tvSeriesId = id ? parseInt(id, 10) : null;
   
-  const { movieDetails, credits, loading, error } = useMovieDetails(movieId);
+  const { tvSeriesDetails, credits, loading, error } = useTVSeriesDetails(tvSeriesId);
 
   const handleBackClick = () => {
     navigate(-1);
@@ -22,16 +23,16 @@ const MovieDetailsPage: React.FC = () => {
     return (
       <div className="movie-details-loading">
         <div className="loading-spinner"></div>
-        <p>Carregando detalhes do filme...</p>
+        <p>Carregando detalhes da série...</p>
       </div>
     );
   }
 
-  if (error || !movieDetails) {
+  if (error || !tvSeriesDetails) {
     return (
       <div className="movie-details-error">
-        <h2>Erro ao carregar filme</h2>
-        <p>{error || 'Filme não encontrado'}</p>
+        <h2>Erro ao carregar série</h2>
+        <p>{error || 'Série não encontrada'}</p>
         <button onClick={handleBackClick} className="back-button">
           <ArrowLeft size={20} />
           Voltar
@@ -40,26 +41,13 @@ const MovieDetailsPage: React.FC = () => {
     );
   }
 
-  const formatRuntime = (minutes: number) => {
-    const hours = Math.floor(minutes / 60);
-    const mins = minutes % 60;
-    return `${hours}h ${mins}m`;
-  };
-
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('pt-BR', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 0,
-    }).format(amount);
-  };
 
   return (
     <div className="movie-details-page">
       {/* Header com backdrop */}
       <div className="movie-header">
         {(() => {
-          const backdropUrl = tmdbService.getBackdropUrl(movieDetails.backdrop_path, 'original');
+          const backdropUrl = tmdbService.getBackdropUrl(tvSeriesDetails.backdrop_path, 'original');
           return backdropUrl && (
             <div 
               className="movie-backdrop"
@@ -80,11 +68,11 @@ const MovieDetailsPage: React.FC = () => {
           <div className="movie-header-info">
             <div className="movie-poster">
               {(() => {
-                const posterUrl = tmdbService.getImageUrl(movieDetails.poster_path, 'w500');
+                const posterUrl = tmdbService.getImageUrl(tvSeriesDetails.poster_path, 'w500');
                 return posterUrl ? (
                   <img
                     src={posterUrl}
-                    alt={movieDetails.title}
+                    alt={tvSeriesDetails.name}
                     className="poster-image"
                   />
                 ) : (
@@ -96,47 +84,47 @@ const MovieDetailsPage: React.FC = () => {
             </div>
             
             <div className="movie-info">
-              <h1 className="movie-title">{movieDetails.title}</h1>
-              {movieDetails.original_title !== movieDetails.title && (
-                <h2 className="movie-original-title">{movieDetails.original_title}</h2>
+              <h1 className="movie-title">{tvSeriesDetails.name}</h1>
+              {tvSeriesDetails.original_name !== tvSeriesDetails.name && (
+                <h2 className="movie-original-title">{tvSeriesDetails.original_name}</h2>
               )}
               
-              {movieDetails.tagline && (
-                <p className="movie-tagline">"{movieDetails.tagline}"</p>
+              {tvSeriesDetails.tagline && (
+                <p className="movie-tagline">"{tvSeriesDetails.tagline}"</p>
               )}
               
               <div className="movie-meta">
                 <div className="movie-rating">
                   <Star size={20} className="star-icon" />
-                  <span>{movieDetails.vote_average.toFixed(1)}</span>
-                  <span className="rating-count">({movieDetails.vote_count} votos)</span>
+                  <span>{tvSeriesDetails.vote_average.toFixed(1)}</span>
+                  <span className="rating-count">({tvSeriesDetails.vote_count} votos)</span>
                 </div>
                 
                 <div className="movie-year">
                   <Calendar size={16} />
-                  <span>{new Date(movieDetails.release_date).getFullYear()}</span>
+                  <span>{new Date(tvSeriesDetails.first_air_date).getFullYear()}</span>
                 </div>
                 
-                {movieDetails.runtime > 0 && (
+                {tvSeriesDetails.number_of_seasons > 0 && (
                   <div className="movie-runtime">
                     <Clock size={16} />
-                    <span>{formatRuntime(movieDetails.runtime)}</span>
+                    <span>{tvSeriesDetails.number_of_seasons} temporada(s)</span>
                   </div>
                 )}
               </div>
               
               <div className="movie-genres">
-                {movieDetails.genres.map((genre) => (
+                {tvSeriesDetails.genres.map((genre: Genre) => (
                   <span key={genre.id} className="genre-tag">
                     {genre.name}
                   </span>
                 ))}
               </div>
               
-              {movieDetails.overview && (
+              {tvSeriesDetails.overview && (
                 <div className="movie-overview">
                   <h3>Sinopse</h3>
-                  <p>{movieDetails.overview}</p>
+                  <p>{tvSeriesDetails.overview}</p>
                 </div>
               )}
             </div>
@@ -162,45 +150,45 @@ const MovieDetailsPage: React.FC = () => {
             <h3 className="additional-info-title">Informações Adicionais</h3>
             
             <div className="info-grid">
-              {movieDetails.status && (
+              {tvSeriesDetails.status && (
                 <div className="info-item">
                   <strong>Status:</strong>
-                  <span>{movieDetails.status}</span>
+                  <span>{tvSeriesDetails.status}</span>
                 </div>
               )}
               
-              {movieDetails.budget > 0 && (
+              {tvSeriesDetails.number_of_episodes > 0 && (
                 <div className="info-item">
-                  <strong>Orçamento:</strong>
-                  <span>{formatCurrency(movieDetails.budget)}</span>
+                  <strong>Episódios:</strong>
+                  <span>{tvSeriesDetails.number_of_episodes}</span>
                 </div>
               )}
               
-              {movieDetails.revenue > 0 && (
+              {tvSeriesDetails.number_of_seasons > 0 && (
                 <div className="info-item">
-                  <strong>Receita:</strong>
-                  <span>{formatCurrency(movieDetails.revenue)}</span>
+                  <strong>Temporadas:</strong>
+                  <span>{tvSeriesDetails.number_of_seasons}</span>
                 </div>
               )}
               
-              {movieDetails.production_countries.length > 0 && (
+              {tvSeriesDetails.production_countries.length > 0 && (
                 <div className="info-item">
                   <strong>País:</strong>
-                  <span>{movieDetails.production_countries.map(c => c.name).join(', ')}</span>
+                  <span>{tvSeriesDetails.production_countries.map((c: ProductionCountry) => c.name).join(', ')}</span>
                 </div>
               )}
               
-              {movieDetails.spoken_languages.length > 0 && (
+              {tvSeriesDetails.spoken_languages.length > 0 && (
                 <div className="info-item">
                   <strong>Idioma:</strong>
-                  <span>{movieDetails.spoken_languages.map(l => l.english_name).join(', ')}</span>
+                  <span>{tvSeriesDetails.spoken_languages.map((l: SpokenLanguage) => l.english_name).join(', ')}</span>
                 </div>
               )}
               
-              {movieDetails.production_companies.length > 0 && (
+              {tvSeriesDetails.production_companies.length > 0 && (
                 <div className="info-item">
                   <strong>Produção:</strong>
-                  <span>{movieDetails.production_companies.map(c => c.name).join(', ')}</span>
+                  <span>{tvSeriesDetails.production_companies.map((c: ProductionCompany) => c.name).join(', ')}</span>
                 </div>
               )}
             </div>
@@ -211,4 +199,4 @@ const MovieDetailsPage: React.FC = () => {
   );
 };
 
-export default MovieDetailsPage;
+export default TVSeriesDetailsPage;

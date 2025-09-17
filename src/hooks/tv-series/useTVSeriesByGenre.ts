@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
-import type { TVSeries } from '../types/tvSeries';
-import { tmdbService } from '../services/tmdbApi';
+import type { TVSeries } from '../../types/tvSeries';
+import { tmdbService } from '../../services/tmdbApi';
 
 export const useTVSeriesByGenre = (genreId: number) => {
   const [tvSeries, setTVSeries] = useState<TVSeries[]>([]);

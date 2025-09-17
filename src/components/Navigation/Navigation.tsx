@@ -37,14 +37,6 @@ const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
             Séries
           </button>
         </li>
-        <li className="nav-item">
-          <button 
-            className="nav-link"
-            onClick={() => handleNavClick('/favoritos')}
-          >
-            Favoritos
-          </button>
-        </li>
       </ul>
     </nav>
   );

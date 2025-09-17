@@ -85,8 +85,8 @@ const TVSeriesPage: React.FC = () => {
         searchPlaceholder="Pesquisar séries..."
       />
       
-      {/* Banner com série em destaque */}
-      <TVSeriesBanner tvSeries={popularTVSeries} />
+      {/* Banner com série em destaque - escondido durante pesquisa */}
+      {!searchQuery && <TVSeriesBanner tvSeries={popularTVSeries} />}
 
       <div className="carousels-container">
         {/* Séries Populares */}

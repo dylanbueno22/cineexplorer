@@ -80,8 +80,8 @@ const MoviesPage: React.FC = () => {
         searchPlaceholder="Pesquisar filmes..."
       />
       
-      {/* Hero Banner */}
-      <HeroBanner />
+      {/* Hero Banner - escondido durante pesquisa */}
+      {!searchQuery && <HeroBanner />}
 
       {/* Seções de Filmes */}
       <div className="movies-content">
